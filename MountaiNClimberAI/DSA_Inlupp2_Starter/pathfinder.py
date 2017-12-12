@@ -24,7 +24,7 @@ class Pathfinder:
             #starting_row = random.randint( 0, self._map.getHeight() )
 
         # Search for one random path:
-            ( cost, path ) = self.findPath(self.startingpos)#( starting_row )
+            ( cost, path ) = self.findPath(self.startingpos)
             self.startingpos += 1
 
         # It is the only path we have found, visualise it:
@@ -75,6 +75,7 @@ class Pathfinder:
         rows = self._map.getHeight()
         cols = self._map.getWidth()
 
+
         row = starting_row
 
         cost = 0
@@ -85,13 +86,37 @@ class Pathfinder:
             # how high are we right now?
             current_altitude = matrix[row][col]
 
+            straight = matrix[row][col + 1]
+            gostraight = int(math.fabs(current_altitude - straight))
+
+            if row  == self._map.getHeight()- 1:
+                godown = sys.maxsize
+            else:
+                down = matrix[row + 1][col + 1]
+                godown = int(math.fabs(current_altitude - down))
+
+            if row  == 0:
+                goupp = sys.maxsize
+            else:
+                upp = matrix[row - 1][col + 1]
+                goupp = int(math.fabs(current_altitude - upp))
+
+
+
+
+
             # Pick a random direction - up/right,  right,  down/right
-            r = random.randint(-1,1)
-            row = row + r
-            if row < 0:
-                row = 0
-            if row > rows-1:
-                row = rows-1
+           # r = random.randint(-1,1)
+            #row = row + r
+            if goupp < gostraight and goupp < godown:
+
+                    row =row -1
+            if godown < gostraight and godown< goupp:
+
+                    row = row+1
+            if gostraight < goupp and gostraight< godown:
+                row = row
+
             col += 1
 
             # how high are we now?
