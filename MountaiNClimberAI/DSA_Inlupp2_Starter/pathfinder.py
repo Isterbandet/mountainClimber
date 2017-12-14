@@ -58,7 +58,7 @@ class Pathfinder:
 
         # And the cost of this so called "best" path:
                 self._visualiser.setBestPathCost(self.costlist[self.costindex] )
-
+                #self._visualiser.setBestPathCost(int(4555))
         # What next?  Can you do better than random?
         # TODO:  Step 1 - a greeedy algorithm from a random starting position
         # TODO:  Step 2 - best greedy of all possible starting positions
@@ -87,19 +87,26 @@ class Pathfinder:
             current_altitude = matrix[row][col]
 
             straight = matrix[row][col + 1]
-            gostraight = int(math.fabs(current_altitude - straight))
+            #gostraight = int(math.fabs(current_altitude - straight))
+            gostraight= straight
+
+
+
+
 
             if row  == self._map.getHeight()- 1:
                 godown = sys.maxsize
             else:
                 down = matrix[row + 1][col + 1]
-                godown = int(math.fabs(current_altitude - down))
+                #godown = int(math.fabs(current_altitude - down))
+                godown = down
 
             if row  == 0:
                 goupp = sys.maxsize
             else:
                 upp = matrix[row - 1][col + 1]
-                goupp = int(math.fabs(current_altitude - upp))
+                goupp = upp
+                #goupp = int(math.fabs(current_altitude - upp))
 
 
 
@@ -108,11 +115,10 @@ class Pathfinder:
             # Pick a random direction - up/right,  right,  down/right
            # r = random.randint(-1,1)
             #row = row + r
-            if goupp < gostraight and goupp < godown:
 
+            if goupp < gostraight and goupp < godown:
                     row =row -1
             if godown < gostraight and godown< goupp:
-
                     row = row+1
             if gostraight < goupp and gostraight< godown:
                 row = row
